@@ -1,0 +1,62 @@
+{
+	"name": "vscode-cnormitek",
+	"displayName": "cnormitek for VSCode",
+	"description": "cnormitek extension for VSCode",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.51.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onLanguage:c",
+		"onLanguage:cpp",
+		"onCommand:cnormitek.lintFile"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"configuration": {
+			"title": "cnormitek",
+			"properties": {
+				"cnormitek.scriptLocation": {
+					"type": "string",
+					"default": "cnormitek",
+					"description": "Specify where is the cnormitek script."
+				},
+				"cnormitek.additionalScriptArgs": {
+					"type": "array",
+					"default": [],
+					"description": "Specify args to append when calling `cnormitek`. Refer to `cnormitek` manual or help to see the flags."
+				}
+			}
+		},
+		"commands": [
+			{
+				"category": "cnormitek",
+				"command": "cnormitek.lintFile",
+				"title": "Lint active file"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile && npm run lint",
+		"lint": "eslint src --ext ts"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.51.0",
+		"@types/glob": "^7.1.3",
+		"@types/mocha": "^8.0.0",
+		"@types/node": "^12.11.7",
+		"eslint": "^7.9.0",
+		"@typescript-eslint/eslint-plugin": "^4.1.1",
+		"@typescript-eslint/parser": "^4.1.1",
+		"glob": "^7.1.6",
+		"mocha": "^8.1.3",
+		"typescript": "^4.0.2",
+		"vscode-test": "^1.4.0"
+	}
+}
