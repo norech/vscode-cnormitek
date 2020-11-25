@@ -112,6 +112,7 @@ export function activate(context: vscode.ExtensionContext) {
 	debug = vscode.window.createOutputChannel("cnormitek debug");
 
 	const editorChange = vscode.window.onDidChangeActiveTextEditor(lintEditor);
+	const textOpen = vscode.workspace.onDidOpenTextDocument(lintDocument);
 	const textChange = vscode.workspace.onDidChangeTextDocument((e) => lintDocument(e.document));
 	const textSave = vscode.workspace.onDidSaveTextDocument(lintDocument);
 	let commandLint = vscode.commands.registerCommand('cnormitek.lintFile', () => {
@@ -119,6 +120,7 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 
 	context.subscriptions.push(editorChange);
+	context.subscriptions.push(textOpen);
 	context.subscriptions.push(textChange);
 	context.subscriptions.push(textSave);
 	context.subscriptions.push(commandLint);
