@@ -53,7 +53,7 @@ function displayErrors(textDocument: vscode.TextDocument, data: string) {
 
 function lintDocument(textDocument: vscode.TextDocument): void {
 
-	const config = vscode.workspace.getConfiguration("vscode-cnormitek", textDocument);
+	const config = vscode.workspace.getConfiguration("cnormitek", textDocument);
 	if (textDocument.languageId !== "c" && textDocument.languageId !== "cpp") {
 		return;
 	}
@@ -64,8 +64,8 @@ function lintDocument(textDocument: vscode.TextDocument): void {
 		return;
 	}
 
-	const scriptLoc: string = config.get("cnormitek.scriptLocation") || "cnormitek";
-	const customArgs: string[] = config.get("cnormitek.additionalScriptArgs") || [];
+	const scriptLoc: string = config.get("scriptLocation") || "cnormitek";
+	const customArgs: string[] = config.get("additionalScriptArgs") || [];
 
 	const args = [ "-", "--no-color", ...customArgs ];
 	
