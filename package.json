@@ -2,10 +2,12 @@
 	"name": "vscode-cnormitek",
 	"displayName": "cnormitek for VSCode",
 	"description": "cnormitek extension for VSCode",
+	"publisher": "Norech",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.51.0"
 	},
+	"repository": "https://github.com/norech/vscode-cnormitek",
 	"categories": [
 		"Other"
 	],
@@ -41,6 +43,7 @@
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
+		"package": "vsce package",
 		"compile": "tsc -p ./",
 		"watch": "tsc -watch -p ./",
 		"pretest": "npm run compile && npm run lint",
