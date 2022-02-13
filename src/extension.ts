@@ -19,7 +19,7 @@ function getSeverity(message: string) {
 		case "info":
 		default:
 			return vscode.DiagnosticSeverity.Information;
-	
+
 	}
 }
 
@@ -68,7 +68,7 @@ function lintDocument(textDocument: vscode.TextDocument): void {
 	const customArgs: string[] = config.get("additionalScriptArgs") || [];
 
 	const args = [ "-", "--no-color", ...customArgs ];
-	
+
 	if (childProcesses.length > 5) {
 		debug.appendLine("Too many processes started at the same time. Hold on.");
 		return;
@@ -94,6 +94,11 @@ function lintDocument(textDocument: vscode.TextDocument): void {
 		childProcesses = childProcesses.filter((c) => c !== childProcess);
 		displayErrors(textDocument, data);
 	});
+
+	setTimeout(() => {
+		if (!childProcess.killed)
+			childProcess.kill();
+	}, 20000);
 }
 
 
