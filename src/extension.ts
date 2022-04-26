@@ -79,6 +79,10 @@ function lintDocument(textDocument: vscode.TextDocument): void {
 
 	const args = [ "-", "--no-color", ...customArgs ];
 
+	if (textDocument.fileName.endsWith(".h")) {
+		args.push("--stdin-h");
+	}
+
 	if (childProcesses.length > 5) {
 		debug.appendLine("Too many processes started at the same time. Hold on.");
 		return;
