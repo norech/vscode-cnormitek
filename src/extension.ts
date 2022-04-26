@@ -6,8 +6,8 @@ let debug!: vscode.OutputChannel;
 let childProcesses: ChildProcessWithoutNullStreams[] = [];
 
 function getErrorType(str: string) {
-	let start = str.indexOf("(") + 1;
-	let end = str.indexOf(")", start);
+	let start = str.lastIndexOf("(") + 1;
+	let end = str.lastIndexOf(")", start);
 	return str.substring(start, end);
 }
 
@@ -59,6 +59,14 @@ function lintDocument(textDocument: vscode.TextDocument): void {
 		&& !textDocument.fileName.endsWith(".hpp")) {
 		return;
 	}
+
+	const ignoreDirs: string[] = config.get("ignoreDirs") || [];
+	if (ignoreDirs.some(pattern => vscode.languages.match({ pattern }, textDocument) !== 0)) {
+		debug.appendLine("File is in an ignored directory.");
+		displayErrors(textDocument, "");
+		return;
+	}
+
 	const input = textDocument.getText();
 	if (input === "") {
 		debug.appendLine("File has no content.");
@@ -70,6 +78,10 @@ function lintDocument(textDocument: vscode.TextDocument): void {
 	const customArgs: string[] = config.get("additionalScriptArgs") || [];
 
 	const args = [ "-", "--no-color", ...customArgs ];
+
+	if (textDocument.fileName.endsWith(".h")) {
+		args.push("--stdin-h");
+	}
 
 	if (childProcesses.length > 5) {
 		debug.appendLine("Too many processes started at the same time. Hold on.");
