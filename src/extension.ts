@@ -6,8 +6,8 @@ let debug!: vscode.OutputChannel;
 let childProcesses: ChildProcessWithoutNullStreams[] = [];
 
 function getErrorType(str: string) {
-	let start = str.indexOf("(") + 1;
-	let end = str.indexOf(")", start);
+	let start = str.lastIndexOf("(") + 1;
+	let end = str.lastIndexOf(")", start);
 	return str.substring(start, end);
 }
 
