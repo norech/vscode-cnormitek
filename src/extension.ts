@@ -59,6 +59,14 @@ function lintDocument(textDocument: vscode.TextDocument): void {
 		&& !textDocument.fileName.endsWith(".hpp")) {
 		return;
 	}
+
+	const ignoreDirs: string[] = config.get("ignoreDirs") || [];
+	if (ignoreDirs.some(pattern => vscode.languages.match({ pattern }, textDocument) !== 0)) {
+		debug.appendLine("File is in an ignored directory.");
+		displayErrors(textDocument, "");
+		return;
+	}
+
 	const input = textDocument.getText();
 	if (input === "") {
 		debug.appendLine("File has no content.");

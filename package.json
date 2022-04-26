@@ -30,6 +30,14 @@
 					"type": "array",
 					"default": [],
 					"description": "Specify args to append when calling `cnormitek`. Refer to `cnormitek` manual or help to see the flags."
+				},
+				"cnormitek.ignoreDirs": {
+					"type": "array",
+					"default": [
+						"/usr/include/*.h",
+						"/usr/include/**/*.h"
+					],
+					"description": "Specify patterns of files to not run in `cnormitek`."
 				}
 			}
 		},
