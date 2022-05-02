@@ -54,9 +54,11 @@ function displayErrors(textDocument: vscode.TextDocument, data: string) {
 function lintDocument(textDocument: vscode.TextDocument): void {
 
 	const config = vscode.workspace.getConfiguration("cnormitek", textDocument);
-	if (textDocument.languageId !== "c" && textDocument.languageId !== "cpp"
-		&& !textDocument.fileName.endsWith(".cpp")
-		&& !textDocument.fileName.endsWith(".hpp")) {
+	if (textDocument.languageId !== "c" && textDocument.languageId !== "cpp") {
+		return;
+	}
+
+	if (textDocument.fileName.endsWith(".cpp") || textDocument.fileName.endsWith(".hpp")) {
 		return;
 	}
 
